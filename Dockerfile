@@ -19,7 +19,7 @@ RUN sed -i -e"s/postgres/developer/g" /home/devstep/.profile.d/postgresql.sh
 
 RUN mkdir -p /workspace && chown developer /workspace
 
-RUN locale-gen pt_BR.UTF-8
+RUN locale-gen en_US.UTF-8
 
 RUN pip install flake8 && \
     pip install --upgrade git+https://github.com/oca/pylint-odoo.git
