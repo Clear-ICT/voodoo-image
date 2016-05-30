@@ -19,7 +19,7 @@ RUN sed -i -e"s/postgres/developer/g" /home/devstep/.profile.d/postgresql.sh
 
 RUN mkdir -p /workspace && chown developer /workspace
 
-RUN locale-gen pt_BR.UTF-8
+RUN locale-gen en_US.UTF-8
 
 RUN pip install flake8 && \
     pip install --upgrade git+https://github.com/oca/pylint-odoo.git
@@ -48,6 +48,10 @@ ADD stack/bin/ak /usr/local/bin/ak
 #Install fonts
 ADD stack/fonts/c39hrp24dhtt.ttf /usr/share/fonts/c39hrp24dhtt.ttf
 RUN chmod a+r /usr/share/fonts/c39hrp24dhtt.ttf && fc-cache -f -v
+
+#Install ethiopic fonts
+ADD stack/fonts/ethiopic /usr/share/fonts/ethiopic
+RUN chmod -R a+r /usr/share/fonts/ethiopic && fc-cache -f -v
 
 USER developer
 
