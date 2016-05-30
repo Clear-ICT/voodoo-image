@@ -49,6 +49,10 @@ ADD stack/bin/ak /usr/local/bin/ak
 ADD stack/fonts/c39hrp24dhtt.ttf /usr/share/fonts/c39hrp24dhtt.ttf
 RUN chmod a+r /usr/share/fonts/c39hrp24dhtt.ttf && fc-cache -f -v
 
+#Install ethiopic fonts
+ADD stack/fonts/ethiopic /usr/share/fonts/ethiopic
+RUN chmod -R a+r /usr/share/fonts/ethiopic && fc-cache -f -v
+
 USER developer
 
 WORKDIR /workspace
