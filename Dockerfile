@@ -5,21 +5,21 @@ USER root
 RUN DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y libsasl2-dev bzr mercurial libxmlsec1-dev python-pip graphviz \
-    python-cups python-dbus python-openssl python-libxml2 wkhtmltopdf xfonts-base \
-    xfonts-75dpi npm git postgresql-client wget libpq-dev libjpeg8-dev libldap2-dev && \
+    python-cups python-dbus python-openssl python-libxml2 xfonts-base \
+    xfonts-75dpi npm git postgresql-client wget libpq-dev libjpeg8-dev libldap2-dev \
+    libffi-dev vim && \
+    libfreetype6-dev libpng12-dev libcups2-dev && \
     npm install -g less less-plugin-clean-css && \
     ln -sf /usr/bin/nodejs /usr/bin/node && \
     apt-get clean
 
+# Force to install the version 0.12.1 of wkhtmltopdf as recomended by odoo
+RUN wget http://download.gna.org/wkhtmltopdf/0.12/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb && \
+    dpkg -i wkhtmltox-0.12.1_linux-trusty-amd64.deb
+
 RUN locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8 && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
-
-RUN pip install --upgrade pip && \
-    pip install flake8 && \
-    pip install git+https://github.com/oca/pylint-odoo.git && \
-    pip install pgcli && \
-    pip install git+https://github.com/akretion/ak.git
 
 #Install fonts
 ADD stack/fonts/c39hrp24dhtt.ttf /usr/share/fonts/c39hrp24dhtt.ttf
@@ -35,7 +35,7 @@ ADD stack/build /workspace/
 RUN sh /workspace/build_all
 
 # Pre-build for tests
-# TODO reimplement using https://github.com/akretion/voodoo/pull/33/files 
+# TODO reimplement using https://github.com/akretion/voodoo/pull/33/files
 #RUN sh /workspace/build_tests
 
 ## Config for developer user
@@ -44,6 +44,12 @@ RUN sh /workspace/build_all
 #RUN mkdir /home/devstep/.local && touch /home/devstep/.viminfo
 
 RUN adduser odoo
+
+RUN pip install --upgrade pip && \
+    pip install flake8 && \
+    pip install pgcli && \
+    pip install git+https://github.com/oca/pylint-odoo.git && \
+    pip install git+https://github.com/akretion/ak.git@1.1.1
 
 COPY stack/entrypoint /usr/local/bin/entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
