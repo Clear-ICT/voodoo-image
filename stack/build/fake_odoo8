@@ -19,9 +19,9 @@ mkdir conf
 touch conf/__init__.py
 cd /workspace
 
-wget https://raw.githubusercontent.com/akretion/voodoo-template/8.0/buildout.cfg
-wget https://raw.githubusercontent.com/akretion/voodoo-template/8.0/frozen.cfg
-wget https://raw.githubusercontent.com/akretion/voodoo-template/8.0/buildout.dev.cfg
+wget https://raw.githubusercontent.com/Clear-ICT/voodoo-template/8.0/buildout.cfg
+wget https://raw.githubusercontent.com/Clear-ICT/voodoo-template/8.0/frozen.cfg
+wget https://raw.githubusercontent.com/Clear-ICT/voodoo-template/8.0/buildout.dev.cfg
 python bin/buildout -c buildout.dockerfile.cfg
 rm -rf /workspace/parts
 rm -rf /workspace/etc
