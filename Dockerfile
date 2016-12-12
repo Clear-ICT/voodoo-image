@@ -8,7 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive && \
     python-cups python-dbus python-openssl python-libxml2 xfonts-base \
     xfonts-75dpi npm git postgresql-client wget libpq-dev libjpeg8-dev libldap2-dev \
     libfreetype6-dev libpng12-dev libcups2-dev python-numpy python-numpy-dev \
-    libffi-dev vim ghostscript && \
+    libffi-dev vim telnet ghostscript && \
     npm install -g less less-plugin-clean-css && \
     ln -sf /usr/bin/nodejs /usr/bin/node && \
     apt-get clean
@@ -49,12 +49,14 @@ RUN pip install --upgrade pip && \
     pip install flake8 && \
     pip install pgcli && \
     pip install git+https://github.com/oca/pylint-odoo.git && \
-    pip install git+https://github.com/akretion/ak.git@1.2.1
+    pip install git+https://github.com/akretion/ak.git@1.2.3
+
+WORKDIR /workspace
 
 COPY stack/entrypoint /usr/local/bin/entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 
-WORKDIR /workspace
 USER odoo
 RUN git config --global user.email "voodoo@fake.com" &&\
     git config --global user.name "Voodoo"
+
